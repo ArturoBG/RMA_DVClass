@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,42 +14,36 @@ public class PlayerController : MonoBehaviour
 
     //functions
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
-
-
-
-
-
         playerInput = new SimpleControls();
         gameplayActions = playerInput.gameplay;
-        //gameplayActions.move.performed += ctx => playerMovement. ();
-         
+
+        gameplayActions.fire.performed += ctx => playerMovement.Fire(ctx);
     }
 
     private void OnEnable()
     {
         Debug.Log("OnEnable");
+        gameplayActions.Enable();
     }
 
     private void OnDisable()
     {
         Debug.Log("OnDisable");
+        gameplayActions.Disable();
     }
 
     public void Start()
     {
         Debug.Log("this is an Start");
-
     }
-
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Debug.Log("this is an Update");
+        playerMovement.Move(gameplayActions.move.ReadValue<Vector2>());
     }
-
-
 }
