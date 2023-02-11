@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     [SerializeField]
     private PlayerCameraController cameraController;
+
+    [SerializeField]
+    private WeaponScript weaponScript;
+
     public SimpleControls playerInput;
     public SimpleControls.GameplayActions gameplayActions;
 
@@ -21,11 +25,15 @@ public class PlayerController : MonoBehaviour
         //get components from Player
         playerMovement = GetComponent<PlayerMovement>();
         cameraController = GetComponent<PlayerCameraController>();
+        weaponScript = GetComponent<WeaponScript>();
+
         playerInput = new SimpleControls();
         gameplayActions = playerInput.gameplay;
 
-        //Fire
-        gameplayActions.fire.performed += ctx => playerMovement.Fire(ctx);
+        //Fire 
+        gameplayActions.fire.performed += ctx => weaponScript.Shoot();
+
+
         gameplayActions.jump.performed += ctx => playerMovement.Jump();
 
         //Sprint action

@@ -15,11 +15,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool isGrounded = false;
 
-    [SerializeField]
-    private float speed = 0.1f;
+    public float speed = 0.1f;
 
     [SerializeField]
     private float defaultSpeed = 1f;
+
     [SerializeField]
     private float sprintSpeed = 2f;
 
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Jump!");
         //Modify if needed
         float jumpForce = Mathf.Abs(jumpingHeight * gravity);
-       // Debug.Log("Force " + jumpForce);
+        // Debug.Log("Force " + jumpForce);
 
         if (isGrounded == true)
         {
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Sprint(bool isPressed)
     {
-        if (isPressed) 
+        if (isPressed)
         {
             Debug.Log("Sprint speed");
             speed = sprintSpeed;
@@ -80,9 +80,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("default speed");
             speed = defaultSpeed;
         }
-
-     
-
     }
 
     public void Fire(InputAction.CallbackContext context)
