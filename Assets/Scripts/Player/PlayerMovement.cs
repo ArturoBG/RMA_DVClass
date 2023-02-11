@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
+    private void Update()
+    {
+        isGrounded = characterController.isGrounded;
+    }
+
     public void Move(Vector2 input)
     {
         // Debug.Log("input x: " + input.x + " y: " + input.y);
@@ -36,15 +41,24 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
 
+        //check if grounded
+        if (isGrounded == true && playerVelocity.y < 0)
+        {
+            playerVelocity.y = -1f;
+        }
     }
 
     public void Jump()
     {
         Debug.Log("Jump!");
+        //Modify if needed
         float jumpForce = Mathf.Abs(jumpingHeight * gravity);
-        Debug.Log("Force "+jumpForce);
-        playerVelocity.y = jumpForce;
+        Debug.Log("Force " + jumpForce);
 
+        if (isGrounded == true)
+        {
+            playerVelocity.y = jumpForce;
+        }
     }
 
     public void Fire(InputAction.CallbackContext context)
