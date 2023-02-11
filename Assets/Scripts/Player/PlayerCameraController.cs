@@ -29,7 +29,7 @@ public class PlayerCameraController : MonoBehaviour
         float mouseX = input.x;
         float mouseY = input.y;
 
-        Debug.Log("input mouse x "+mouseX+ " y "+mouseY);
+        //Debug.Log("input mouse x "+mouseX+ " y "+mouseY);
 
         //calculate camera rotation
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;

@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
         gameplayActions = playerInput.gameplay;
 
         gameplayActions.fire.performed += ctx => playerMovement.Fire(ctx);
+        gameplayActions.jump.performed += ctx => playerMovement.Jump();
+
     }
 
     private void OnEnable()
