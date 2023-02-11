@@ -62,6 +62,15 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""07c3c61a-5d3a-4d76-b9d1-d0e1027c8be9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -185,6 +194,28 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff61ab69-366f-43b0-8628-87bb52090ab7"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d10b168d-9aeb-47e8-9a4e-221eb31e4d81"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -197,6 +228,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         m_gameplay_move = m_gameplay.FindAction("move", throwIfNotFound: true);
         m_gameplay_look = m_gameplay.FindAction("look", throwIfNotFound: true);
         m_gameplay_jump = m_gameplay.FindAction("jump", throwIfNotFound: true);
+        m_gameplay_sprint = m_gameplay.FindAction("sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -260,6 +292,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_move;
     private readonly InputAction m_gameplay_look;
     private readonly InputAction m_gameplay_jump;
+    private readonly InputAction m_gameplay_sprint;
     public struct GameplayActions
     {
         private @SimpleControls m_Wrapper;
@@ -268,6 +301,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         public InputAction @move => m_Wrapper.m_gameplay_move;
         public InputAction @look => m_Wrapper.m_gameplay_look;
         public InputAction @jump => m_Wrapper.m_gameplay_jump;
+        public InputAction @sprint => m_Wrapper.m_gameplay_sprint;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -289,6 +323,9 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @sprint.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
+                @sprint.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
+                @sprint.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -305,6 +342,9 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
+                @sprint.started += instance.OnSprint;
+                @sprint.performed += instance.OnSprint;
+                @sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -315,5 +355,6 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }

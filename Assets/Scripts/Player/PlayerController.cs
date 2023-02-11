@@ -24,8 +24,13 @@ public class PlayerController : MonoBehaviour
         playerInput = new SimpleControls();
         gameplayActions = playerInput.gameplay;
 
+        //Fire
         gameplayActions.fire.performed += ctx => playerMovement.Fire(ctx);
         gameplayActions.jump.performed += ctx => playerMovement.Jump();
+
+        //Sprint action
+        gameplayActions.sprint.canceled += ctx => playerMovement.Sprint(false);
+        gameplayActions.sprint.performed += ctx => playerMovement.Sprint(true);
 
     }
 
