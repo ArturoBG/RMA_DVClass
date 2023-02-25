@@ -40,6 +40,10 @@ public class PlayerController : MonoBehaviour
         gameplayActions.sprint.canceled += ctx => playerMovement.Sprint(false);
         gameplayActions.sprint.performed += ctx => playerMovement.Sprint(true);
 
+        //Add new action, change weapon
+        //gameplayaction.selectweapon1.performed  weaponScript.SelectWeapon(0)
+        //gameplayaction.selectweapon2.performed  weaponScript.SelectWeapon(1)
+
     }
 
     private void OnEnable()

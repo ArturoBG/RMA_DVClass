@@ -448,10 +448,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f257808eaa076e4bbc5b6e5e7a43b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 135146, guid: b79841d82f4b1f6499d7f44697afdcbd, type: 3}
+  weapon:
+  - {fileID: 11400000, guid: 26f68bb54baa2db41856860d7cdcdd4a, type: 2}
+  - {fileID: 11400000, guid: 871e0ddc95497ef4bbcf9cc4875efabb, type: 2}
+  - {fileID: 11400000, guid: fc6332f3916013f4f8ce62fa75325e6e, type: 2}
+  - {fileID: 11400000, guid: 9c6ee24f3b0f86a4ca82b73218574011, type: 2}
   muzzleTransform: {fileID: 206006246862368216}
-  projectileSpeed: 5
-  weaponFlash: {fileID: 7302094551993511899}
 --- !u!143 &1637047153525551574
 CharacterController:
   m_ObjectHideFlags: 0
@@ -502,7 +504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7242763149867893451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.295, z: 0.503}
+  m_LocalPosition: {x: -0, y: 0.33, z: 0.528}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -536,7 +538,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7302094551975242047}
   m_LocalRotation: {x: 0.0049393103, y: -0, z: -0, w: 0.99998784}
-  m_LocalPosition: {x: 0.57699996, y: -0.31799996, z: 1.0040002}
+  m_LocalPosition: {x: 0.577, y: -0.242, z: 1.082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5342,7 +5344,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.5173097
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
