@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb860ca8da4c434d84b6977b9710a3b, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  bulletMuzzlePrefab: {fileID: 0}
-  weaponParticleSystem: {fileID: 0}
-  bulletExplosion: {fileID: 0}
+  bulletSystem: {fileID: 9012684875206244027, guid: 055dd1992d519ad45bfe1c8b878f6117,
+    type: 3}
+  bulletMuzzlePrefab: {fileID: 7129619879382505178, guid: 6bca79fa19f20c745870e6dc4dc0ed5a,
+    type: 3}
+  bulletExplosion: {fileID: 7129619879382505178, guid: 6bca79fa19f20c745870e6dc4dc0ed5a,
+    type: 3}
+  speedToShoot: 0.5
+  bulletSpeed: 10
+  damage: 2

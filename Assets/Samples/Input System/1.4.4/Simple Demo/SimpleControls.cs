@@ -71,6 +71,24 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""weapon1"",
+                    ""type"": ""Button"",
+                    ""id"": ""d453fd31-386e-480b-9747-40f9ab2cbe38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""weapon2"",
+                    ""type"": ""Button"",
+                    ""id"": ""402696ae-e9c5-47b7-b6aa-116902bfd303"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +234,50 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""action"": ""sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1ea9c7b-5784-41d3-92f1-77349c0951b6"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ef39d18-cb85-472a-a157-de767156ffb5"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e794cbda-8960-433e-8977-2cc43befbb9e"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21dee8f6-74af-42a5-a337-2fca529f285a"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -229,6 +291,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         m_gameplay_look = m_gameplay.FindAction("look", throwIfNotFound: true);
         m_gameplay_jump = m_gameplay.FindAction("jump", throwIfNotFound: true);
         m_gameplay_sprint = m_gameplay.FindAction("sprint", throwIfNotFound: true);
+        m_gameplay_weapon1 = m_gameplay.FindAction("weapon1", throwIfNotFound: true);
+        m_gameplay_weapon2 = m_gameplay.FindAction("weapon2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,6 +357,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_look;
     private readonly InputAction m_gameplay_jump;
     private readonly InputAction m_gameplay_sprint;
+    private readonly InputAction m_gameplay_weapon1;
+    private readonly InputAction m_gameplay_weapon2;
     public struct GameplayActions
     {
         private @SimpleControls m_Wrapper;
@@ -302,6 +368,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         public InputAction @look => m_Wrapper.m_gameplay_look;
         public InputAction @jump => m_Wrapper.m_gameplay_jump;
         public InputAction @sprint => m_Wrapper.m_gameplay_sprint;
+        public InputAction @weapon1 => m_Wrapper.m_gameplay_weapon1;
+        public InputAction @weapon2 => m_Wrapper.m_gameplay_weapon2;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -326,6 +394,12 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @sprint.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
                 @sprint.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
                 @sprint.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
+                @weapon1.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon1;
+                @weapon1.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon1;
+                @weapon1.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon1;
+                @weapon2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
+                @weapon2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
+                @weapon2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -345,6 +419,12 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @sprint.started += instance.OnSprint;
                 @sprint.performed += instance.OnSprint;
                 @sprint.canceled += instance.OnSprint;
+                @weapon1.started += instance.OnWeapon1;
+                @weapon1.performed += instance.OnWeapon1;
+                @weapon1.canceled += instance.OnWeapon1;
+                @weapon2.started += instance.OnWeapon2;
+                @weapon2.performed += instance.OnWeapon2;
+                @weapon2.canceled += instance.OnWeapon2;
             }
         }
     }
@@ -356,5 +436,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnWeapon1(InputAction.CallbackContext context);
+        void OnWeapon2(InputAction.CallbackContext context);
     }
 }

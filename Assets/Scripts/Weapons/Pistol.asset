@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb860ca8da4c434d84b6977b9710a3b, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  bulletMuzzlePrefab: {fileID: 0}
-  weaponParticleSystem: {fileID: 0}
-  bulletExplosion: {fileID: 0}
+  bulletSystem: {fileID: 135146, guid: b79841d82f4b1f6499d7f44697afdcbd, type: 3}
+  bulletMuzzlePrefab: {fileID: 107096, guid: 79b0a8abb1f641b4a8faa10b904758ea, type: 3}
+  bulletExplosion: {fileID: 107096, guid: 79b0a8abb1f641b4a8faa10b904758ea, type: 3}
+  speedToShoot: 1
+  bulletSpeed: 6
+  damage: 5

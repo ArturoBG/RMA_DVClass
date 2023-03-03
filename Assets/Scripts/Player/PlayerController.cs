@@ -7,10 +7,10 @@ public class PlayerController : MonoBehaviour
     //
     [SerializeField]
     private PlayerMovement playerMovement;
+
     [SerializeField]
     private PlayerCameraController cameraController;
 
-    [SerializeField]
     private WeaponScript weaponScript;
 
     public SimpleControls playerInput;
@@ -29,21 +29,6 @@ public class PlayerController : MonoBehaviour
 
         playerInput = new SimpleControls();
         gameplayActions = playerInput.gameplay;
-
-        //Fire 
-        gameplayActions.fire.performed += ctx => weaponScript.Shoot();
-
-
-        gameplayActions.jump.performed += ctx => playerMovement.Jump();
-
-        //Sprint action
-        gameplayActions.sprint.canceled += ctx => playerMovement.Sprint(false);
-        gameplayActions.sprint.performed += ctx => playerMovement.Sprint(true);
-
-        //Add new action, change weapon
-        //gameplayaction.selectweapon1.performed  weaponScript.SelectWeapon(0)
-        //gameplayaction.selectweapon2.performed  weaponScript.SelectWeapon(1)
-
     }
 
     private void OnEnable()
@@ -60,6 +45,17 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
+        //Fire
+        gameplayActions.fire.performed += ctx => weaponScript.Shoot();
+
+        gameplayActions.jump.performed += ctx => playerMovement.Jump();
+
+        //Sprint action
+        gameplayActions.sprint.canceled += ctx => playerMovement.Sprint(false);
+        gameplayActions.sprint.performed += ctx => playerMovement.Sprint(true);
+
+        gameplayActions.weapon1.performed += ctx => weaponScript.SelectWeapon(0); //slot 1
+        gameplayActions.weapon2.performed += ctx => weaponScript.SelectWeapon(1); //slot 2
     }
 
     // Update is called once per frame
