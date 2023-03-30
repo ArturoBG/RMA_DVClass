@@ -1,5 +1,9 @@
 using UnityEngine;
 
+
+[RequireComponent(typeof(PlayerCameraController), typeof(PlayerMovement), typeof(CharacterController) )]
+[RequireComponent(typeof(WeaponScript))]
+
 public class PlayerController : MonoBehaviour
 {
     //
@@ -56,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
         gameplayActions.weapon1.performed += ctx => weaponScript.SelectWeapon(0); //slot 1
         gameplayActions.weapon2.performed += ctx => weaponScript.SelectWeapon(1); //slot 2
+
+        //camera switch
+        gameplayActions.switchCamera.performed += ctx => cameraController.SwitchCamera();
     }
 
     // Update is called once per frame
@@ -68,4 +75,9 @@ public class PlayerController : MonoBehaviour
     {
         cameraController.Look(gameplayActions.look.ReadValue<Vector2>());
     }
+
+
+
+
+   
 }

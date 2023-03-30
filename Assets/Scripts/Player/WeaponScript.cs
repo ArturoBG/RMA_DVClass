@@ -4,14 +4,22 @@ public class WeaponScript : MonoBehaviour
 {
     [Header("Player Arsenal")]
     public WeaponsScriptableObject[] weapon;
+
     public Transform muzzleTransform;
 
-    private GameObject projectilePrefab;    
+    private GameObject projectilePrefab;
     private float projectileSpeed;
     private GameObject weaponFlash;
 
     [SerializeField]
     private int weaponSelected = 0;
+
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -20,7 +28,11 @@ public class WeaponScript : MonoBehaviour
     }
 
     public void Shoot()
-    {        
+    {
+        //Trigger animation
+        //call the animator object,set trigger to shoot
+        animator.SetTrigger("shoot");
+
         GameObject bulletGO = Instantiate(projectilePrefab, muzzleTransform.position, Quaternion.identity);
         GameObject flashGO = Instantiate(weaponFlash, muzzleTransform.position, Quaternion.identity);
 
@@ -29,22 +41,20 @@ public class WeaponScript : MonoBehaviour
 
         //Change projectile properties with SO
         ProjectileScript ps = bulletGO.GetComponent<ProjectileScript>();
-        
+
         //TODO change weapon number
         ps.projectileExplosionPrefab = weapon[weaponSelected].bulletExplosion;
         //
-        
-        
+
         Rigidbody rb = bulletGO.GetComponent<Rigidbody>();
         rb.AddForce(muzzleTransform.forward * projectileSpeed, ForceMode.Impulse);
         //muzzle flash particle system
-        
     }
 
     private void ChangeWeapon(int number = 0)
     {
-        Debug.Log("weapon selected "+number);
-       
+        Debug.Log("weapon selected " + number);
+
         weaponSelected = number;
         projectilePrefab = weapon[number].bulletSystem;
         projectileSpeed = weapon[number].bulletSpeed;
@@ -53,7 +63,7 @@ public class WeaponScript : MonoBehaviour
 
     public void SelectWeapon(int option)
     {
-        Debug.Log("Option "+option);
+        Debug.Log("Option " + option);
         ///
         switch (option)
         {
@@ -61,20 +71,16 @@ public class WeaponScript : MonoBehaviour
                 //change slot 1
                 ChangeWeapon(0);
                 break;
+
             case 1:
-                //change slot 2 
+                //change slot 2
                 ChangeWeapon(1);
                 break;
+
             case 2:
                 //change slot 3
                 ChangeWeapon(2);
                 break;
-            
-
         }
-
     }
-     
-
-
 }

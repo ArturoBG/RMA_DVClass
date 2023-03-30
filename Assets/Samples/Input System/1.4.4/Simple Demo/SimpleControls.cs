@@ -89,6 +89,15 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""switchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0bfa94a-c095-4b4e-b49b-fdf4fd5ccd8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -278,6 +287,28 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""action"": ""weapon2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a281da1c-4464-4faa-8490-542c32373467"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""switchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59af7fc4-faaa-46af-9599-711548d5c9bb"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""switchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -293,6 +324,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         m_gameplay_sprint = m_gameplay.FindAction("sprint", throwIfNotFound: true);
         m_gameplay_weapon1 = m_gameplay.FindAction("weapon1", throwIfNotFound: true);
         m_gameplay_weapon2 = m_gameplay.FindAction("weapon2", throwIfNotFound: true);
+        m_gameplay_switchCamera = m_gameplay.FindAction("switchCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -359,6 +391,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_sprint;
     private readonly InputAction m_gameplay_weapon1;
     private readonly InputAction m_gameplay_weapon2;
+    private readonly InputAction m_gameplay_switchCamera;
     public struct GameplayActions
     {
         private @SimpleControls m_Wrapper;
@@ -370,6 +403,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         public InputAction @sprint => m_Wrapper.m_gameplay_sprint;
         public InputAction @weapon1 => m_Wrapper.m_gameplay_weapon1;
         public InputAction @weapon2 => m_Wrapper.m_gameplay_weapon2;
+        public InputAction @switchCamera => m_Wrapper.m_gameplay_switchCamera;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -400,6 +434,9 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @weapon2.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
                 @weapon2.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
                 @weapon2.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeapon2;
+                @switchCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
+                @switchCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
+                @switchCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -425,6 +462,9 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @weapon2.started += instance.OnWeapon2;
                 @weapon2.performed += instance.OnWeapon2;
                 @weapon2.canceled += instance.OnWeapon2;
+                @switchCamera.started += instance.OnSwitchCamera;
+                @switchCamera.performed += instance.OnSwitchCamera;
+                @switchCamera.canceled += instance.OnSwitchCamera;
             }
         }
     }
@@ -438,5 +478,6 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnWeapon1(InputAction.CallbackContext context);
         void OnWeapon2(InputAction.CallbackContext context);
+        void OnSwitchCamera(InputAction.CallbackContext context);
     }
 }

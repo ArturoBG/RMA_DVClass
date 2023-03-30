@@ -23,7 +23,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float sprintSpeed = 2f;
 
+    [Header("Animation Settings")]
+    private Animator animator;
+    int moveXAnimationId;
+    int moveZAnimationId;
+    [SerializeField]
+    private Vector2 animationVelocity;
+    [SerializeField]
+    private float smoothFactor = 0.1f;
+
+    //smooth damp
+    Vector3 currentAnimationBlend;
+
     private CharacterController characterController;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -37,7 +54,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 input)
     {
-        // Debug.Log("input x: " + input.x + " y: " + input.y);
+        //MoveDirection for Animation purposes
+        Vector3 moveDirectionAnim = Vector3.zero;
+        moveDirectionAnim.x = input.x;
+        moveDirectionAnim.y = input.y;
+                
+        //Smooth animation
+        currentAnimationBlend = Vector2.SmoothDamp(currentAnimationBlend, moveDirectionAnim, ref animationVelocity, smoothFactor );
+        //Debug.Log("currentanimblendvector " + currentAnimationBlend.x + " " + currentAnimationBlend.y + " " + currentAnimationBlend.z);
+
+        //Animator call and movement
+        animator.SetFloat("moveX", currentAnimationBlend.x);
+        animator.SetFloat("moveZ", currentAnimationBlend.y);
+
+        //MoveDirection for character controller
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -81,9 +111,5 @@ public class PlayerMovement : MonoBehaviour
             speed = defaultSpeed;
         }
     }
-
-    public void Fire(InputAction.CallbackContext context)
-    {
-        Debug.Log("Fire");
-    }
+    
 }
