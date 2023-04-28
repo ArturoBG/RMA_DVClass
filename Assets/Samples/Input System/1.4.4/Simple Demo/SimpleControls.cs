@@ -98,6 +98,24 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponPistol"",
+                    ""type"": ""Button"",
+                    ""id"": ""55edac4b-26a5-4dd6-85be-5f25c1e6fc46"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponRifle"",
+                    ""type"": ""Button"",
+                    ""id"": ""be62027a-ba60-4509-9b9c-1a79c6fe96b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -309,6 +327,28 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                     ""action"": ""switchCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""458f42ba-1f29-4c5e-b3ab-583b0c1c58a5"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponPistol"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f919bd0-eaa7-44d4-af0d-1db661ebb9ab"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponRifle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -325,6 +365,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         m_gameplay_weapon1 = m_gameplay.FindAction("weapon1", throwIfNotFound: true);
         m_gameplay_weapon2 = m_gameplay.FindAction("weapon2", throwIfNotFound: true);
         m_gameplay_switchCamera = m_gameplay.FindAction("switchCamera", throwIfNotFound: true);
+        m_gameplay_SwitchWeaponPistol = m_gameplay.FindAction("SwitchWeaponPistol", throwIfNotFound: true);
+        m_gameplay_SwitchWeaponRifle = m_gameplay.FindAction("SwitchWeaponRifle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -392,6 +434,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_weapon1;
     private readonly InputAction m_gameplay_weapon2;
     private readonly InputAction m_gameplay_switchCamera;
+    private readonly InputAction m_gameplay_SwitchWeaponPistol;
+    private readonly InputAction m_gameplay_SwitchWeaponRifle;
     public struct GameplayActions
     {
         private @SimpleControls m_Wrapper;
@@ -404,6 +448,8 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         public InputAction @weapon1 => m_Wrapper.m_gameplay_weapon1;
         public InputAction @weapon2 => m_Wrapper.m_gameplay_weapon2;
         public InputAction @switchCamera => m_Wrapper.m_gameplay_switchCamera;
+        public InputAction @SwitchWeaponPistol => m_Wrapper.m_gameplay_SwitchWeaponPistol;
+        public InputAction @SwitchWeaponRifle => m_Wrapper.m_gameplay_SwitchWeaponRifle;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -437,6 +483,12 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @switchCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
                 @switchCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
                 @switchCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchCamera;
+                @SwitchWeaponPistol.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponPistol;
+                @SwitchWeaponPistol.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponPistol;
+                @SwitchWeaponPistol.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponPistol;
+                @SwitchWeaponRifle.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponRifle;
+                @SwitchWeaponRifle.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponRifle;
+                @SwitchWeaponRifle.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitchWeaponRifle;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -465,6 +517,12 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
                 @switchCamera.started += instance.OnSwitchCamera;
                 @switchCamera.performed += instance.OnSwitchCamera;
                 @switchCamera.canceled += instance.OnSwitchCamera;
+                @SwitchWeaponPistol.started += instance.OnSwitchWeaponPistol;
+                @SwitchWeaponPistol.performed += instance.OnSwitchWeaponPistol;
+                @SwitchWeaponPistol.canceled += instance.OnSwitchWeaponPistol;
+                @SwitchWeaponRifle.started += instance.OnSwitchWeaponRifle;
+                @SwitchWeaponRifle.performed += instance.OnSwitchWeaponRifle;
+                @SwitchWeaponRifle.canceled += instance.OnSwitchWeaponRifle;
             }
         }
     }
@@ -479,5 +537,7 @@ public partial class @SimpleControls : IInputActionCollection2, IDisposable
         void OnWeapon1(InputAction.CallbackContext context);
         void OnWeapon2(InputAction.CallbackContext context);
         void OnSwitchCamera(InputAction.CallbackContext context);
+        void OnSwitchWeaponPistol(InputAction.CallbackContext context);
+        void OnSwitchWeaponRifle(InputAction.CallbackContext context);
     }
 }

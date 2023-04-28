@@ -3,132 +3,120 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class EnemyController : MonoBehaviour
-{
-
-
-    [Header("Enemy Settings")]
-    NavMeshAgent agent;
-    WeaponScript weapon;
-    Animator animator;
-    [SerializeField]
-    private Transform playerPosition;
-    public LayerMask groundLayer;
-    public LayerMask playerLayer;
-    //STATES
-    //walking
-    public Vector3 navPoint;
-    [SerializeField]
-    bool navPointSet;
-    [SerializeField]
-    private float sightRange;
-    [SerializeField]
-    private Vector3 distanceToPlayer;
-    //chasing
-    [SerializeField]
-    private bool playerInSightRange;
-    //attacking
-    public bool playerInAttackRange;
-    public float offsetToPlayer;
-    public float timerToAttack = 5f;
-    public bool timeToShoot;
-    public float attackRange;
-    bool alreadyAttacking;
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
+namespace Scripts.PlayerScripts
+{   
+    [RequireComponent(typeof(NavMeshAgent), typeof(WeaponScript))]
+    public class EnemyController : MonoBehaviour
     {
-        weapon = GetComponent<WeaponScript>();
-        playerPosition = FindObjectOfType<PlayerController>().GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
-    }
+        private WeaponScript weapon;
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-    void Start()
-    {
-        //StartCoroutine(AttackCoroutine());
-    }
+        public NavMeshAgent agent;
+        public Transform Player;
+        public LayerMask groundLayer;
+        public LayerMask playerLayer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+        //patrol
+        public Vector3 navPoint;
+        bool navPointSet;
+        public float patrolRange;
+        Vector3 distanceToPlayer;
+        //Attack
+        public float timeBetweenAttacks;
+        public float offsetToPlayer;
+        public float attackRange;
+        bool alreadyAttacking;
 
-        if (!playerInSightRange && !playerInAttackRange)
-        {
-            Walk(); // Patrol
+        //States
+        public bool playerInSightRange;
+        public bool playerInAttackRange;
+
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake()
+        {   
+            weapon = GetComponent<WeaponScript>();
+            //look for player on scene
+            Player = FindObjectOfType<PlayerController>().GetComponent<Transform>();
+            agent = GetComponent<NavMeshAgent>();
         }
-        if (playerInSightRange && !playerInAttackRange)
-        {
-            Chase();
-        }
-        if (playerInSightRange && playerInAttackRange)
-        {
-            Attack();
-        }
-    }
 
-    private void Walk()
-    {
-        Debug.Log("idle/patrol/walking");
-    }
-
-    private void Chase()
-    {
-        Debug.Log("Chasing!");
-
-        if (playerPosition != null)
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        void Update()
         {
-            distanceToPlayer = new Vector3(playerPosition.position.x + offsetToPlayer, playerPosition.position.y, playerPosition.position.z + offsetToPlayer);
-            // TODO
-            // send x and z to enemy movement
-            // call animator for movement
-            agent.SetDestination(distanceToPlayer);
-        }
-        else
-        {
-            return;
-        }
-    }
+            playerInSightRange = Physics.CheckSphere(transform.position, patrolRange, playerLayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-    private void Attack()
-    {
-        Debug.Log("Attack!");
-        if (playerPosition != null)
-        {
-            //shoot the player
-            if (!alreadyAttacking)
+            //states 
+
+            if (!playerInSightRange && !playerInAttackRange)
             {
-                weapon.Shoot();
-                alreadyAttacking = true;
-                Invoke(nameof(ResetAttack), timerToAttack);
+                //Patrol();
             }
-            //turn to player
-            transform.LookAt(playerPosition);
+            if (playerInSightRange && !playerInAttackRange)
+            {
+                ChasePlayer();
+            }
+            if (playerInAttackRange && playerInSightRange)
+            {
+                AttackPlayer();
+            }
+
         }
-    }
 
-    private void ResetAttack()
-    {
-        alreadyAttacking = false;
-    }
+        private void Patrol()
+        {
+            Debug.Log("walking");
+            
+        }
 
-    /// <summary>
-    /// Callback to draw gizmos that are pickable and always drawn.
-    /// </summary>
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        private void ChasePlayer()
+        {
+            Debug.Log("Chasing after player!");
+
+            distanceToPlayer = new Vector3(Player.transform.position.x + offsetToPlayer, Player.transform.position.x,
+                Player.transform.position.z);
+
+            if (Player != null)
+            {
+                agent.SetDestination(distanceToPlayer);
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        private void AttackPlayer()
+        {
+            Debug.Log("Attack");
+            if (Player != null)
+            {
+                //shoot at player
+                weapon.ShootBulletWRigidBody(false);
+                transform.LookAt(Player);
+            }
+
+        }
+
+        /// <summary>
+        /// Callback to draw gizmos that are pickable and always drawn.
+        /// </summary>
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, patrolRange);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+        }
+
+
+
     }
 
 }
+
