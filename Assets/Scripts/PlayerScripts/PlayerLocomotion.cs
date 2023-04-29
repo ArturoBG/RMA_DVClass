@@ -1,8 +1,6 @@
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem;
-using UnityEditor;
 
 namespace Scripts.PlayerScripts 
 {
