@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(WeaponScript))]
 
 public class PlayerController : MonoBehaviour
-{
-    
+{    
     //
     //Propertie/parameters
     //

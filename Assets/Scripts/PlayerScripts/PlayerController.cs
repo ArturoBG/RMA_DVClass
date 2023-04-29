@@ -9,8 +9,7 @@ namespace Scripts.PlayerScripts
     [RequireComponent(typeof(PlayerLocomotion), typeof(CharacterController), typeof(PlayerCameraController))]
     [RequireComponent(typeof(WeaponScript))]
     public class PlayerController : MonoBehaviour
-    {
-        
+    {        
         private SimpleControls playerInput;
         private SimpleControls.GameplayActions gameplayActions;
         private PlayerLocomotion playerMovement;
@@ -59,6 +58,29 @@ namespace Scripts.PlayerScripts
         private void LateUpdate()
         {
             camController.ProcessLook(gameplayActions.look.ReadValue<Vector2>());
+        }   
+
+        /// <summary>
+        /// OnCollisionEnter is called when this collider/rigidbody has begun
+        /// touching another rigidbody/collider.
+        /// </summary>
+        /// <param name="other">The Collision data associated with this collision.</param>
+        void OnCollisionEnter(Collision other)
+        {
+            if(other.gameObject.tag == "bullet")
+            {
+                ///health --
+                //call healthscript component
+                //other getcomponent<BulletScript> get Bullet Value
+                //healthscript damage taken (bullet Value)
+            }
+            if(other.gameObject.tag == "Medkit")
+            {
+                //health ++
+                //call healthScript component
+                //other GetComponent<Medkit> get value
+                //healthScript RegenHealth (value)
+            }
         }
 
     }

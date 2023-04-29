@@ -33,6 +33,7 @@ namespace Scripts.PlayerScripts
             healthBar.GetComponent<Slider>();
             healthBar.maxValue = maxHealth;
             health = maxHealth;
+            fillBar.color = full;
             mid = maxHealth / 2;
             crit = maxHealth / 3;
         }
