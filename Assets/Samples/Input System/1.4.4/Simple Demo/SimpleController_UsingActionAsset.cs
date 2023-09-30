@@ -14,35 +14,35 @@ public class SimpleController_UsingActionAsset : MonoBehaviour
     private bool m_Charging;
     private Vector2 m_Rotation;
 
-    public void Awake()
-    {
-        m_Controls = new SimpleControls();
+    //public void Awake()
+    //{
+    //    m_Controls = new SimpleControls();
 
-        m_Controls.gameplay.fire.performed +=
-            ctx =>
-        {
-            if (ctx.interaction is SlowTapInteraction)
-            {
-                StartCoroutine(BurstFire((int)(ctx.duration * burstSpeed)));
-            }
-            else
-            {
-                Fire();
-            }
-            m_Charging = false;
-        };
-        m_Controls.gameplay.fire.started +=
-            ctx =>
-        {
-            if (ctx.interaction is SlowTapInteraction)
-                m_Charging = true;
-        };
-        m_Controls.gameplay.fire.canceled +=
-            ctx =>
-        {
-            m_Charging = false;
-        };
-    }
+    //    m_Controls.gameplay.fire.performed +=
+    //        ctx =>
+    //    {
+    //        if (ctx.interaction is SlowTapInteraction)
+    //        {
+    //            StartCoroutine(BurstFire((int)(ctx.duration * burstSpeed)));
+    //        }
+    //        else
+    //        {
+    //            Fire();
+    //        }
+    //        m_Charging = false;
+    //    };
+    //    m_Controls.gameplay.fire.started +=
+    //        ctx =>
+    //    {
+    //        if (ctx.interaction is SlowTapInteraction)
+    //            m_Charging = true;
+    //    };
+    //    m_Controls.gameplay.fire.canceled +=
+    //        ctx =>
+    //    {
+    //        m_Charging = false;
+    //    };
+    //}
 
     public void OnEnable()
     {
