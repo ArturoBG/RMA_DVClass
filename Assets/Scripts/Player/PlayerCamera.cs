@@ -14,7 +14,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField]
     private float turnSpeed;
 
-
     [SerializeField]
     private float xRotation;
 

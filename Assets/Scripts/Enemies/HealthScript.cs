@@ -25,22 +25,21 @@ public class HealthScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetHealth();
-       
+        ResetHealth();       
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            TakeDamage(25);
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            HealUp(15);
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.I))
+    //    {
+    //        TakeDamage(25);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.J))
+    //    {
+    //        HealUp(15);
+    //    }
+    //}
 
     public void TakeDamage(int damage)
     {
