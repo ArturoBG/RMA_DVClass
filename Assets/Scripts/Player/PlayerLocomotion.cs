@@ -122,7 +122,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     IEnumerator swordAttackRoutine()
     {
-        playerAnimator.SetTrigger("swordAttack");
+        playerAnimator.SetTrigger("attack");
         yield return new WaitForSeconds(swordClip.length);
     }
 }

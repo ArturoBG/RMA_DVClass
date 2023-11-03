@@ -1,18 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
     [SerializeField]
-    HealthScript healthScript;
+    private HealthScript healthScript;
 
-    private Animator animator;
 
     [Header("Enemy Settings")]
     public EnemyType enemyTypeSO;
-
-    [SerializeField]
-    private float movemenentSpeed;
+    public bool damageTaken = false;
 
     [SerializeField]
     private float damage;
@@ -20,31 +18,36 @@ public class EnemyScript : MonoBehaviour
     [SerializeField]
     private float health;
 
+    public EnemyMovement enemyMovement;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     [SerializeField]
-    float timer = 5f;
+    private float timer = 5f;
 
-    public bool damageTaken = false;
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.tag.Equals("Weapon") && !damageTaken)
-        {
-            StartCoroutine(damageReceived(other));
-        }       
+        enemyMovement.agent.speed = enemyTypeSO.Speed;
+        timer = enemyTypeSO.timerToDamage;
     }
 
-    IEnumerator damageReceived(Collider other)
+  
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("PlayerWeapon") && !damageTaken)
+        {
+            StartCoroutine(damageReceived(other));
+        }
+    }
+
+    private IEnumerator damageReceived(Collider other)
     {
         damageTaken = true;
         Debug.Log("Damage taken");
-        animator.SetTrigger("damage");
+        enemyMovement.animator.SetTrigger("damage");
         healthScript.TakeDamage(other.GetComponent<WeaponScript>().weaponDamage);
         yield return new WaitForSeconds(timer);
         damageTaken = false;
     }
+
+ 
 }

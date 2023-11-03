@@ -8,5 +8,6 @@ public class EnemyType : ScriptableObject
     public int Damage;
     public int TotalHealth;
     public float Speed;
+    public float timerToDamage;
 
 }
